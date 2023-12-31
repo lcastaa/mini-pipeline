@@ -26,10 +26,13 @@ def pipeline(github_repo):
     core_methods.pre_fight_check()
     cloned_repo = core_methods.stage_one(github_repo)
     core_methods.stage_two()
-    core_methods.stage_three(cloned_repo)
+    with_secrets = core_methods.stage_three(cloned_repo)
     config_data = core_methods.stage_four()
     core_methods.stage_five(config_data)
-    core_methods.stage_six(config_data)
+    if not with_secrets:
+        core_methods.stage_six(config_data)
+    else:
+        core_methods.stage_six_with_secrets(config_data)
     core_methods.clean_up()
 
 
