@@ -67,7 +67,9 @@ def stage_three(cloned_repo):
         print('[!!] Exiting process...\n')
         exit(201)
     print('[oo] All Files Found Proceeding to next stage...\n')
-    pass
+    if helper_methods.check_for_file('secrets.json', os.getcwd()):
+        return True
+    return False
 
 
 # Stage Four: Locate Output Build File and Move
@@ -118,7 +120,7 @@ def stage_five(config_data):
     pass
 
 
-# Stage Six: Docker Container Deployment Stage
+# Stage Six: Docker Container Deployment Stage without API Key
 def stage_six(config_data):
     container_name = config_data.get('container_name')
     image_name = config_data.get('image_name')
@@ -128,6 +130,22 @@ def stage_six(config_data):
     print('[oo] Now Deploying Containers...')
     time.sleep(2)
     os.system('sudo docker run ' + args + ' --name ' + container_name + ' ' + image_name)
+    print("[oo] Container has been deployed...")
+    print("[oo] Proceeding to clean up...\n")
+    pass
+
+# Stage Six: Docker Container Deployment Stage if you have an API Key
+def stage_six_with_secrets(config_data):
+    container_name = config_data.get('container_name')
+    image_name = config_data.get('image_name')
+    args = config_data.get('args')
+    print('---------- [ Stage Six: Docker Container Deployment Stage ] ---------- \n')
+    time.sleep(2)
+    print('[oo] Now Deploying Containers...')
+    time.sleep(2)
+    secret_data = helper_methods.return_config_param('secrets.json')
+    secret = secret_data.get('KEY')
+    os.system('sudo docker run -e \'KEY=' + secret + '\' ' + args + ' --name ' + container_name + ' ' + image_name)
     print("[oo] Container has been deployed...")
     print("[oo] Proceeding to clean up...\n")
     pass
