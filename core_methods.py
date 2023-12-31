@@ -139,6 +139,7 @@ def clean_up():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     temp_dir = os.path.join(base_dir, 'temp')
     os.chdir(os.path.join(os.getcwd(), os.pardir))
+    os.chdir(os.path.join(os.getcwd(), os.pardir))
     shutil.rmtree(temp_dir)
     print('[oo] Clean Complete...')
     print('[oo] Ready for next build...\n')
