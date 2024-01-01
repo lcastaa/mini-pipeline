@@ -67,9 +67,14 @@ def stage_three(cloned_repo):
         print('[!!] Exiting process...\n')
         exit(201)
     print('[oo] All Files Found Proceeding to next stage...\n')
+    # Goes out to from inside the cloned repo to the temp folder
+    os.chdir(os.path.join(os.getcwd(), os.pardir))
+    # Checks for secrets
     if helper_methods.check_for_file('secrets.json', os.getcwd()):
+        # if secrets found go back into the cloned repo and return true
         os.chdir(cloned_repo)
         return True
+    # if secrets not found go back into the cloned repo and return false
     os.chdir(cloned_repo)
     return False
 
