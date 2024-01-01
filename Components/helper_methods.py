@@ -1,3 +1,4 @@
+  GNU nano 7.2                                                                                                                                                                helper_methods.py                                                                                                                                                                         
 # This Python file is used to house the helper functions the main.py needs
 import os
 import json
@@ -11,13 +12,20 @@ TEMP_DIR = os.path.join(BASE_DIR, 'temp')
 # ---------[ Preflight Methods ]-----------
 
 # Helper Method One: Check for the temp dir
-def check_for_temp_dir():
+def check_for_temp_dir(main_file_path):
     print('[ Checking for Temp Dir ] \n')
-    if not os.listdir().__contains__('temp'):
+    # Get the directory of the main.py file
+    main_dir = os.path.dirname(main_file_path)
+    temp_dir_path = os.path.join(main_dir, 'temp')
+
+    # Check if the temp directory exists
+    if not os.path.exists(temp_dir_path):
         print('[!!] No Temp Directory Found...Now Creating \n')
         time.sleep(2)
-        os.mkdir('temp')
-    print('[oo] Temp Directory Was Found! Moving to next check... \n')
+        os.mkdir(temp_dir_path)
+        print('[oo] Temp Directory Created! Moving to next check... \n')
+    else:
+        print('[oo] Temp Directory Was Found! Moving to next check... \n')
     return True
 
 
@@ -132,5 +140,4 @@ def get_container_id_using_image_name(image_name):
             container_id = line
             os.remove('temp.txt')
             return container_id
-
-
+            
