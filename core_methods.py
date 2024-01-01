@@ -68,7 +68,9 @@ def stage_three(cloned_repo):
         exit(201)
     print('[oo] All Files Found Proceeding to next stage...\n')
     if helper_methods.check_for_file('secrets.json', os.getcwd()):
+        os.chdir(cloned_repo)
         return True
+    os.chdir(cloned_repo)
     return False
 
 
