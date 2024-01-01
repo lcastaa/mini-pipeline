@@ -9,7 +9,7 @@ import shutil
 def pre_fight_check():
     time.sleep(5)
     print('---------- [ Running Preflight Check ] ---------- \n')
-    if not helper_methods.check_for_temp_dir():
+    if not helper_methods.check_for_temp_dir(os.path.dirname(os.path.abspath(__file__))):
         print('A Fatal Error Occurred...')
         exit(100)
     if not helper_methods.check_for_git():
@@ -29,7 +29,14 @@ def stage_one(github_repo):
     os.chdir("./temp")
     os.system("git clone " + github_repo)
     print('\n[oo] Moving into cloned repository... \n')
-    cloned_repo = os.listdir(os.getcwd())[0]
+    items_in_directory = os.listdir(os.getcwd())
+    directories = [item for item in items_in_directory if os.path.isdir(item)]
+    if directories:
+        cloned_repo = directories[0]
+    else:
+        # Handle the case where no directories are found
+        print("No repository directory found.")
+        exit(1)
     os.chdir(cloned_repo)
     return cloned_repo
 
@@ -66,16 +73,20 @@ def stage_three(cloned_repo):
         shutil.rmtree(cloned_repo)
         print('[!!] Exiting process...\n')
         exit(201)
-    print('[oo] All Files Found Proceeding to next stage...\n')
     # Goes out to from inside the cloned repo to the temp folder
     os.chdir(os.path.join(os.getcwd(), os.pardir))
     # Checks for secrets
+    print("[oo] Now checking for secrets... \n")
     if helper_methods.check_for_file('secrets.json', os.getcwd()):
         # if secrets found go back into the cloned repo and return true
+        print("[oo] A Secret was found... \n")
         os.chdir(cloned_repo)
+        print('[oo] All Files Found Proceeding to next stage...\n')
         return True
     # if secrets not found go back into the cloned repo and return false
+    print("[oo] No Secret was found... \n")
     os.chdir(cloned_repo)
+    print('[oo] All Files Found Proceeding to next stage...\n')
     return False
 
 
@@ -136,6 +147,7 @@ def stage_six(config_data):
     time.sleep(2)
     print('[oo] Now Deploying Containers...')
     time.sleep(2)
+    os.chdir(os.path.join(os.getcwd(), os.pardir))
     os.system('sudo docker run ' + args + ' --name ' + container_name + ' ' + image_name)
     print("[oo] Container has been deployed...")
     print("[oo] Proceeding to clean up...\n")
@@ -150,6 +162,7 @@ def stage_six_with_secrets(config_data):
     time.sleep(2)
     print('[oo] Now Deploying Containers...')
     time.sleep(2)
+    os.chdir(os.path.join(os.getcwd(), os.pardir))
     secret_data = helper_methods.return_config_param('secrets.json')
     secret = secret_data.get('KEY')
     os.system('sudo docker run -e \'KEY=' + secret + '\' ' + args + ' --name ' + container_name + ' ' + image_name)
@@ -159,13 +172,14 @@ def stage_six_with_secrets(config_data):
 
 
 # Is Responsible for cleaning up after pipeline
-def clean_up():
+def clean_up(cloned_repo):
     print('---------- [ Cleaning up ] ---------- \n')
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    temp_dir = os.path.join(base_dir, 'temp')
-    os.chdir(os.path.join(os.getcwd(), os.pardir))
-    os.chdir(os.path.join(os.getcwd(), os.pardir))
-    shutil.rmtree(temp_dir)
+    shutil.rmtree(cloned_repo)
     print('[oo] Clean Complete...')
     print('[oo] Ready for next build...\n')
+    os.chdir(os.path.join(os.getcwd(), os.pardir))
+    print(os.getcwd())
     pass
+
+
+
