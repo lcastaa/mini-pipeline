@@ -1,4 +1,3 @@
-  GNU nano 7.2                                                                                                                                                                helper_methods.py                                                                                                                                                                         
 # This Python file is used to house the helper functions the main.py needs
 import os
 import json
@@ -10,7 +9,6 @@ TEMP_DIR = os.path.join(BASE_DIR, 'temp')
 
 
 # ---------[ Preflight Methods ]-----------
-
 # Helper Method One: Check for the temp dir
 def check_for_temp_dir(main_file_path):
     print('[ Checking for Temp Dir ] \n')

@@ -180,6 +180,3 @@ def clean_up(cloned_repo):
     os.chdir(os.path.join(os.getcwd(), os.pardir))
     print(os.getcwd())
     pass
-
-
-

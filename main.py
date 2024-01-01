@@ -18,7 +18,7 @@ def github_webhook():
         return jsonify({'message': 'Received Push Event !! Now Executing Pipeline...'}), 200
 
     else:
-        return jsonify({'message': 'Unknown GitHub event !! Error: No action has been created to handle GitHub Event: ' + request.headers.>
+        return jsonify({'message': 'Unknown GitHub event !! Error: No action has been created to handle GitHub Event: ' + request.headers.get('X-GitHub-Event')}), 500
 
 
 # This is the actual Pipeline You can add stages in the core_methods
