@@ -12,19 +12,23 @@ If you are using a Virtual-Machine to deploy the application you need to have in
 
 Set up a webhook for your project on Git-Hub and have it send it to http://your-server-public-ip:3000/webhook. Git-Hub will send a POST request to the flask server running on that IP and start the pipeline
 
+I have created a youtube video on how to use it here -> https://www.youtube.com/watch?v=u55UV1-rmBA
 ## Make sure you have
 - Java installed
 - Docker installed
 - Git installed
 - Docker compose installed
+- Pip installed
+- Flask installed via Pip
 - You are able to push and pull from the server getting deployed too (you may have to set up SSH key with Git-Hub)
 
 
 ## Notes
 
 The pipeline will check to see if your repository contains:
-- minipipe.json
-- dockerfile
+- minipipe.json [ Configuration File]
+- secrets.json [Used fro API keys]
+- dockerfile [Used to create the Image]
 
 
 ## minipipe.json
@@ -43,7 +47,7 @@ For example in pom.xml
 
 output_filename = cookbook-0.0.1-SNAPSHOT
 
-How it has to look:
+How it looks:
 ```json
 {
   "container_name": "name-of-container",
