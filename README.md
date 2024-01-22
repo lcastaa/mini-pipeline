@@ -12,7 +12,9 @@ If you are using a Virtual-Machine to deploy the application you need to have in
 
 Set up a webhook for your project on Git-Hub and have it send it to http://your-server-public-ip:3000/webhook. Git-Hub will send a POST request to the flask server running on that IP and start the pipeline
 
-I have created a youtube video on how to use it here -> https://www.youtube.com/watch?v=u55UV1-rmBA
+I have created a YouTube video on how to use it here -> https://www.youtube.com/watch?v=u55UV1-rmBA
+
+IF THE TEMP DIR DOES NOT EXIST WHEN YOU CLONE THE TOOL PLEASE CREATE IT.
 ## Make sure you have
 - Java installed
 - Docker installed
