@@ -35,7 +35,7 @@ def pipeline(github_repo, branch):
 
     cloned_repo = core_methods.stage_one(github_repo, branch)
 
-    core_methods.stage_two()
+    core_methods.stage_two(config_file_path)
 
     with_secrets = core_methods.stage_three(cloned_repo)
 
