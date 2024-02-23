@@ -47,13 +47,15 @@ def stage_two(settings_file):
 
     # Loads settings data to see if we want to run with tests
     data = helper_methods.return_config_param(settings_file)
-    trigger = bool(data.get('run_withtest_tests'))
+    trigger = data.get('run_withtest_tests')
+
+    print("Trigger is: " + trigger)
 
     print(printer.colorize('---------- [Stage Two: Build Project ] ---------- \n', "yellow"))
     for file in os.listdir(os.getcwd()):
         # If the file name equal mvnw which is the build script
         if file == 'mvnw':
-            if not trigger:
+            if trigger == "False":
                 # Execute the build script without tests
                 os.system('bash ./' + file + ' install -DskipTests')
             else:
