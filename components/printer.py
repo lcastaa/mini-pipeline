@@ -2,8 +2,8 @@ import json
 
 def get_boolean_from_prompt(prompt):
     print(prompt)
-    user_choice = input("Enter Yes | No: ")
-    user_choice.capitalize()
+    user_choice = input("Enter Yes | No: ").capitalize()
+
     if user_choice == "YES":
         return "True"
     else:
