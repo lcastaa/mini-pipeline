@@ -56,9 +56,10 @@ def stage_two(settings_file):
             if trigger == 'False':
                 # Execute the build script without tests
                 os.system('bash ./' + file + ' install -DskipTests')
-            else:
+            elif trigger == "True":
                 os.system('bash ./' + file + ' install')
-
+            else:
+                print(printer.colorize('No testing trigger was found, exiting...', 'red'))
     print(printer.colorize('\n[oo] Project Successfully build with MVNW Script...', 'green'))
     print(printer.colorize('[oo] Proceeding to next stage...\n', 'magenta'))
     pass
