@@ -1,5 +1,5 @@
 # Core Stage Methods for the Pipeline
-from Components import helper_methods
+from components import helper_methods
 import os
 import time
 import shutil
@@ -22,12 +22,12 @@ def pre_fight_check():
 
 
 # Stage One: Clone Repository Stage
-def stage_one(github_repo):
+def stage_one(github_repo, branch):
     print('---------- [Stage One: Clone Repository ] ---------- \n')
     time.sleep(4)
     print('[oo] Cloning Repo: ' + github_repo + "\n")
     os.chdir("./temp")
-    os.system("git clone " + github_repo)
+    os.system("git clone -b" + branch + " " + github_repo)
     print('\n[oo] Moving into cloned repository... \n')
     items_in_directory = os.listdir(os.getcwd())
     directories = [item for item in items_in_directory if os.path.isdir(item)]
@@ -138,7 +138,7 @@ def stage_five(config_data):
     pass
 
 
-# Stage Six: Docker Container Deployment Stage without API Key
+# Stage Six: Docker Container Deployment Stage without environment variable
 def stage_six(config_data):
     container_name = config_data.get('container_name')
     image_name = config_data.get('image_name')
@@ -153,7 +153,8 @@ def stage_six(config_data):
     print("[oo] Proceeding to clean up...\n")
     pass
 
-# Stage Six: Docker Container Deployment Stage if you have an API Key
+
+# Stage Six: Docker Container Deployment Stage if you have environment variabl=-0r
 def stage_six_with_secrets(config_data):
     container_name = config_data.get('container_name')
     image_name = config_data.get('image_name')
