@@ -49,7 +49,7 @@ def stage_two(settings_file):
     data = helper_methods.return_config_param(settings_file)
     trigger = data.get('run_withtest_tests')
 
-    print("Trigger is: " + trigger)
+    print('Trigger is: ' + trigger)
 
     print(printer.colorize('---------- [Stage Two: Build Project ] ---------- \n', "yellow"))
     for file in os.listdir(os.getcwd()):
