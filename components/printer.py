@@ -1,13 +1,19 @@
 import json
 
+
 def get_boolean_from_prompt(prompt):
     print(prompt)
-    user_choice = input("Enter Yes | No: ").capitalize()
-
+    user_choice = input("Enter Yes | No: ")
     if user_choice == "YES":
-        return "True"
+        return 'True'
+    elif user_choice == 'yes':
+        return 'True'
+    elif user_choice == 'NO':
+        return 'False'
+    elif user_choice == 'no':
+        return 'False'
     else:
-        return "False"
+        get_boolean_from_prompt(prompt)
 
 
 def colorize(text, color):
